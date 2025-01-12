@@ -9,9 +9,10 @@
   "keywords": [],
   "author": "mohamed saleh",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "description": "a chatbox server that uses auth, socket io and videosdk",
   "dependencies": {
+    "@auth/express": "^0.8.4",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "nodemon": "^3.1.9"
