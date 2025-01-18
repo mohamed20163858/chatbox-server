@@ -45,7 +45,7 @@ const checkUser = async (req, res) => {
   }
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    // console.log(decoded);
+    console.log(decoded);
     const { app } = decoded;
     if (app !== "Next.js") {
       return res.status(403).json({ message: "Forbidden: Invalid token" });
