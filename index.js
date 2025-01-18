@@ -1,12 +1,19 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/user");
+// const cors = require("cors");
 
 const bodyParser = require("body-parser");
 require("dotenv").config();
 const app = express();
 app.use(bodyParser.json());
-
+// app.use(
+//   cors({
+//     origin: "http://localhost:8000", // or your frontend URL
+//     methods: ["GET", "POST"],
+//     allowedHeaders: ["Content-Type", "Authorization"],
+//   })
+// );
 app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
