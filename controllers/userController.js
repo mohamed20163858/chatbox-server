@@ -38,4 +38,13 @@ const signupUser = async (req, res) => {
   }
 };
 
-module.exports = { signupUser, loginUser };
+const checkUser = async (req, res) => {
+  const { email } = req.body;
+  const user = await User.findOne({ email });
+  if (user && user.name && user.password) {
+    return res.json({ hasCredentials: true });
+  }
+  return res.json({ hasCredentials: false });
+};
+
+module.exports = { signupUser, loginUser, checkUser };
