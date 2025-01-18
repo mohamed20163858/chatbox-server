@@ -42,7 +42,7 @@ const checkUser = async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
   if (user && user.name && user.password) {
-    return res.json({ hasCredentials: true });
+    return res.json({ hasCredentials: true, name: user.name });
   }
   return res.json({ hasCredentials: false });
 };
