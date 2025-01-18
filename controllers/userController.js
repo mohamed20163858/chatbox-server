@@ -40,9 +40,11 @@ const signupUser = async (req, res) => {
 
 const checkUser = async (req, res) => {
   const { email } = req.body;
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).select("-_id -__v");
   if (user && user.name && user.password) {
-    return res.json({ hasCredentials: true, name: user.name });
+    const data = { ...user._doc };
+    delete data.password;
+    return res.json({ hasCredentials: true, ...data });
   }
   return res.json({ hasCredentials: false });
 };
