@@ -141,19 +141,16 @@ const resetPassword = async (req, res) => {
       return res.status(403).json({ message: "Forbidden: Invalid token" });
     }
     const { token, password } = req.body;
+    const resetToken = await PasswordResetToken.findOne({ token });
+    if (!resetToken || new Date() > resetToken.expires) {
+      return res.status(400).json({ error: "Invalid or expired token" });
+    }
     if (!validator.isStrongPassword(password)) {
       throw Error(
         "Password not strong enough try to use combination of small and capital letters, numbers and special characters"
       );
     }
 
-    // 1. 验证令牌
-    const resetToken = await PasswordResetToken.findOne({ token });
-    if (!resetToken || new Date() > resetToken.expires) {
-      return res.status(400).json({ error: "Invalid or expired token" });
-    }
-
-    // 2. 更新用户密码
     const hashedPassword = await bcrypt.hash(password, 10);
     await User.updateOne(
       { email: resetToken.email },
