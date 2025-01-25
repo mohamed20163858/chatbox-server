@@ -1,7 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const rateLimit = require("express-rate-limit");
+
 const userRoutes = require("./routes/user");
 // const cors = require("cors");
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
+});
 
 const bodyParser = require("body-parser");
 require("dotenv").config();
@@ -14,6 +20,8 @@ app.use(bodyParser.json());
 //     allowedHeaders: ["Content-Type", "Authorization"],
 //   })
 // );
+app.use(limiter);
+
 app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
